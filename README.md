@@ -1,2 +1,3 @@
 # devjobs-frontend
-Plataforma de busqueda de empleos de tecnología.
+
+Plataforma de búsqueda de empleos de tecnología.
