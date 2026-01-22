@@ -108,7 +108,7 @@ main section > p {
 }
 
 .company-name {
-  color: #7a828d;
+  opacity: 0.5;
   margin-bottom: 0.5rem;
 }
 
