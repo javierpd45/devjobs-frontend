@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resultados de Búsqueda</title>
     <link rel="stylesheet" href="./styles.css" />
-    <script type="module" src="./script.js"></script>
+    <link rel="stylesheet" href="./css/pages/loading.css" />
+    <script type="module" src="./main.js"></script>
   </head>
 
   <body>
@@ -44,142 +45,155 @@
       <section>
         <h1>Encuentra tu próximo trabajo</h1>
         <p>Explora miles de oportunidades en el sector tecnológico.</p>
-        <form class="search-form" role="search">
-          <svg
-            class="search-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="icon icon-tabler icons-tabler-outline icon-tabler-search"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-            <path d="M21 21l-6 -6" />
-          </svg>
+        <form id="search-form" role="search">
+          <div class="search-bar">
+            <svg
+              class="search-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-search"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+              <path d="M21 21l-6 -6" />
+            </svg>
 
-          <input
-            name="search-bar"
-            required
-            type="text"
-            placeholder="Buscar trabajos, empresas o habilidades"
-          />
+            <!-- <label for="search-input"
+              >Buscar trabajos, empresas o habilidades</label
+            > -->
+            <input
+              id="search-input"
+              name="search-input"
+              type="text"
+              placeholder="Buscar trabajos, empresas o habilidades"
+            />
+          </div>
+
+          <div class="filters">
+            <div class="filter-options">
+              <button type="button" value="">
+                Tecnología
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="chevron-down"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M6 9l6 6l6 -6" />
+                </svg>
+              </button>
+              <ul>
+                <li value="">Desarrollo de software</li>
+                <li value="">Ciberseguridad</li>
+              </ul>
+            </div>
+
+            <div class="filter-options">
+              <button type="button" value="">
+                Ubicación
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="chevron-down"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M6 9l6 6l6 -6" />
+                </svg>
+              </button>
+              <ul name="location" id="filter-location">
+                <li value="remoto">Remoto</li>
+                <li value="cdmx">Ciudad de México</li>
+                <li value="guadalajara">Guadalajara</li>
+                <li value="monterrey">Monterrey</li>
+                <li value="barcelona">Barcelona</li>
+              </ul>
+            </div>
+
+            <div class="filter-options">
+              <button type="button" value="">
+                Tipo de contrato
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="chevron-down"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M6 9l6 6l6 -6" />
+                </svg>
+              </button>
+              <ul>
+                <li value="">Tiempo completo</li>
+                <li value="">Medio tiempo</li>
+              </ul>
+            </div>
+
+            <div class="filter-options">
+              <button type="button" value="">
+                Nivel de experiencia
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="chevron-down"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M6 9l6 6l6 -6" />
+                </svg>
+              </button>
+              <ul>
+                <li value="">Junior</li>
+                <li value="">Senior</li>
+              </ul>
+            </div>
+          </div>
         </form>
-
-        <div class="filters">
-          <div class="filter-options">
-            <button>
-              Tecnología
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="chevron-down"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M6 9l6 6l6 -6" />
-              </svg>
-            </button>
-            <ul>
-              <li>Desarrollo de software</li>
-              <li>Ciberseguridad</li>
-            </ul>
-          </div>
-
-          <div class="filter-options">
-            <button>
-              Ubicación
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="chevron-down"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M6 9l6 6l6 -6" />
-              </svg>
-            </button>
-            <ul>
-              <li>Remoto</li>
-              <li>Presencial</li>
-            </ul>
-          </div>
-
-          <div class="filter-options">
-            <button>
-              Tipo de contrato
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="chevron-down"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M6 9l6 6l6 -6" />
-              </svg>
-            </button>
-            <ul>
-              <li>Tiempo completo</li>
-              <li>Medio tiempo</li>
-            </ul>
-          </div>
-
-          <div class="filter-options">
-            <button>
-              Nivel de experiencia
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="chevron-down"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M6 9l6 6l6 -6" />
-              </svg>
-            </button>
-            <ul>
-              <li>Junior</li>
-              <li>Senior</li>
-            </ul>
-          </div>
-        </div>
       </section>
 
       <header>
         <h2>Resultados de la búsqueda</h2>
       </header>
 
+      <!-- Loading spinner -->
+      <div class="loading-container">
+        <div class="spinner"></div>
+      </div>
+
       <section class="jobs-listings">
-        <article>
+        <!-- <article data-modalidad="remoto" class="job-listing-card">
           <h3>Ingeniero de Software</h3>
           <p class="company-name">Tech Solutions Inc. | Remoto</p>
           <p>
@@ -191,7 +205,7 @@
           <button class="button-apply-job">Aplicar</button>
         </article>
 
-        <article>
+        <article data-modalidad="cdmx" class="job-listing-card">
           <h3>Analista de Datos</h3>
           <p class="company-name">Data Driven Co. | Ciudad de México</p>
           <p>
@@ -202,7 +216,7 @@
           <button class="button-apply-job">Aplicar</button>
         </article>
 
-        <article>
+        <article data-modalidad="guadalajara" class="job-listing-card">
           <h3>Desarrollador de Aplicaciones Móviles</h3>
           <p class="company-name">Mobile Apps Ltd. | Guadalajara</p>
           <p>
@@ -213,7 +227,7 @@
           <button class="button-apply-job">Aplicar</button>
         </article>
 
-        <article>
+        <article data-modalidad="remoto" class="job-listing-card">
           <h3>Ingeniero de DevOps</h3>
           <p class="company-name">Cloud Services SA | Remoto</p>
           <p>
@@ -223,7 +237,7 @@
             AWS, Azure o GCP.
           </p>
           <button class="button-apply-job">Aplicar</button>
-        </article>
+        </article> -->
       </section>
 
       <nav aria-label="Paginación" class="pagination">

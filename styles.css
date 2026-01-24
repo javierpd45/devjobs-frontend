@@ -41,6 +41,8 @@ main {
     flex-grow: 1 
     flex-shrink: 1 
     flex-basis: 0% */
+  display: flex;
+  flex-direction: column;
 }
 
 body > header nav {
@@ -112,7 +114,7 @@ main section > p {
   margin-bottom: 0.5rem;
 }
 
-.search-form {
+.search-bar {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -127,7 +129,7 @@ main section > p {
   margin-inline: auto;
 }
 
-.search-form input {
+.search-bar input {
   height: 24px;
   width: 100%;
   background: #18212d;
@@ -171,6 +173,7 @@ button {
   .filter-options {
     display: flex;
     flex-direction: column;
+    position: relative; /* permite posicionar el dropdown sin empujar el layout */
   }
 
   button {
@@ -181,6 +184,7 @@ button {
     cursor: pointer;
     color: #fff;
     font-size: 0.875rem;
+    white-space: nowrap;
 
     &:hover {
       background: #1173d4;
@@ -199,9 +203,13 @@ button {
   }
 
   ul {
-    visibility: collapse;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    top: 100%;
+    display: none;
     &.is-visible {
-      visibility: visible;
+      display: block;
     }
   }
 
@@ -211,7 +219,8 @@ button {
     cursor: pointer;
     color: #fff;
     list-style: none;
-    font-size: 0.875rem;
+    /* font-size: 0.875rem; */
+    font-size: small;
     &:hover {
       background: #1173d4;
     }
@@ -241,6 +250,10 @@ body header div a:first-child {
   text-decoration: none;
 }
 
+.hide-job {
+  display: none;
+}
+
 .jobs-listings {
   display: flex;
   flex-direction: column;
@@ -251,28 +264,16 @@ body header div a:first-child {
   margin-bottom: 2rem;
   margin-inline: auto;
 
-  .hide-job {
+  /* .hide-job {
     display: none;
-  }
+  } */
 }
 
-.jobs-listings article {
+.job-listing-card {
   padding: 1.5rem;
   border-bottom: 1px solid #374151;
   width: 100%;
-}
 
-.jobs-listings article:last-child {
-  border-bottom: none;
-}
-
-main header h2 {
-  margin-top: 2rem;
-  margin-bottom: 1em;
-  margin-left: 12.2vw;
-}
-
-.jobs-listings article {
   position: relative;
 
   button {
@@ -283,11 +284,22 @@ main header h2 {
   }
 }
 
+.job-listing-card:last-child {
+  border-bottom: none;
+}
+
+main header h2 {
+  margin-top: 2rem;
+  margin-bottom: 1em;
+  margin-left: 12.2vw;
+}
+
 .pagination {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-block: 2rem;
+  margin-top: auto;
+  margin-bottom: 2rem;
 
   a {
     display: flex;
@@ -325,8 +337,8 @@ main header h2 {
 
 main section:first-child {
   position: relative;
-  min-height: 320px;
-  padding: 4rem 1.5rem;
+  min-height: 100px;
+  padding-inline: 1.5rem;
 
   .background-img {
     position: absolute;
