@@ -4,8 +4,8 @@ const jobContainer = document.querySelector(".jobs-listings");
 const RESULTS_PER_PAGE = 3;
 
 // Fetching data from data.json and creating job listing cards
-async function fetchData() {
-  const response = await fetch("./data.json");
+async function fetchData(url) {
+  const response = await fetch(url);
   const jobs = await response.json();
 
   if (loading) loading.remove();
@@ -16,21 +16,24 @@ async function fetchData() {
     return;
   }
 
-  jobs.forEach((job) => {
-    const article = document.createElement("article");
-    article.classList.add("job-listing-card");
-
-    article.setAttribute("data-modalidad", job.data.modalidad);
-    article.dataset.nivel = job.data.nivel;
-    article.dataset.technology = job.data.technology;
-
-    article.innerHTML = `<h3>${job.titulo}</h3>
-          <p class="company-name">${job.empresa} | ${job.ubicacion}</p>
-          <p>${job.descripcion}</p>
-          <button class="button-apply-job">Aplicar</button>`;
-
-    jobContainer.appendChild(article);
-  });
+  return jobs;
 }
 
-fetchData();
+const urlJobs = "./data.json";
+const jobs = await fetchData(urlJobs);
+
+jobs.forEach((job) => {
+  const article = document.createElement("article");
+  article.classList.add("job-listing-card");
+
+  article.setAttribute("data-modalidad", job.data.modalidad);
+  article.dataset.nivel = job.data.nivel;
+  article.dataset.technology = job.data.technology;
+
+  article.innerHTML = `<h3>${job.titulo}</h3>
+        <p class="company-name">${job.empresa} | ${job.ubicacion}</p>
+        <p>${job.descripcion}</p>
+        <button class="button-apply-job">Aplicar</button>`;
+
+  jobContainer.appendChild(article);
+});
