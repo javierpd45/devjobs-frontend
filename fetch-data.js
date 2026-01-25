@@ -1,8 +1,6 @@
 const loading = document.querySelector(".loading-container");
 const jobContainer = document.querySelector(".jobs-listings");
 
-const RESULTS_PER_PAGE = 3;
-
 // Fetching data from data.json and creating job listing cards
 async function fetchData(url) {
   const response = await fetch(url);
@@ -22,6 +20,7 @@ async function fetchData(url) {
 const urlJobs = "./data.json";
 const jobs = await fetchData(urlJobs);
 
+// Creating job listing cards
 jobs.forEach((job) => {
   const article = document.createElement("article");
   article.classList.add("job-listing-card");

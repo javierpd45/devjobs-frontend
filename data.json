@@ -178,5 +178,17 @@
       "modalidad": "monterrey",
       "nivel": "junior"
     }
+  },
+  {
+    "id": "a2f1d8c6-b72c-45f5-bcc5-5c1d1f39b0b1",
+    "titulo": "Soporte Técnico Nivel 10",
+    "empresa": "HelpDesk Pro",
+    "ubicacion": "Barcelona",
+    "descripcion": "Buscamos un técnico de soporte con habilidades en resolución de incidencias, redes y sistemas operativos. Se requiere atención al detalle y excelente trato con el usuario.",
+    "data": {
+      "technology": "mobile",
+      "modalidad": "barcelona",
+      "nivel": "senior"
+    }
   }
 ]

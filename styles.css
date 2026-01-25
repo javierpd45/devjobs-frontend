@@ -282,10 +282,17 @@ body header div a:first-child {
   border-bottom: none;
 }
 
-main header h2 {
-  margin-top: 2rem;
-  margin-bottom: 1em;
-  margin-left: 12.2vw;
+main header {
+  h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    margin-left: 12.2vw;
+  }
+
+  #resultados-busqueda-info {
+    margin-bottom: 0.5rem;
+    margin-left: 12.2vw;
+  }
 }
 
 .pagination {
@@ -295,7 +302,7 @@ main header h2 {
   margin-top: auto;
   margin-bottom: 2rem;
 
-  a {
+  button {
     display: flex;
     justify-content: center;
     align-items: center;

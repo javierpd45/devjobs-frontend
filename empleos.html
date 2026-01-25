@@ -72,7 +72,7 @@
 
           <div class="filters">
             <div class="filter-options">
-              <button type="button" value="">
+              <button class="filter-button" type="button" value="">
                 Tecnología
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -90,14 +90,16 @@
                   <path d="M6 9l6 6l6 -6" />
                 </svg>
               </button>
-              <ul>
-                <li value="">Desarrollo de software</li>
-                <li value="">Ciberseguridad</li>
+              <ul name="technology" id="filter-technology">
+                <li value="javascript">JavaScript</li>
+                <li value="python">Python</li>
+                <li value="react">React</li>
+                <li value="node">Node.js</li>
               </ul>
             </div>
 
             <div class="filter-options">
-              <button type="button" value="">
+              <button class="filter-button" type="button" value="">
                 Ubicación
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -125,32 +127,7 @@
             </div>
 
             <div class="filter-options">
-              <button type="button" value="">
-                Tipo de contrato
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="chevron-down"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M6 9l6 6l6 -6" />
-                </svg>
-              </button>
-              <ul>
-                <li value="">Tiempo completo</li>
-                <li value="">Medio tiempo</li>
-              </ul>
-            </div>
-
-            <div class="filter-options">
-              <button type="button" value="">
+              <button class="filter-button" type="button" value="">
                 Nivel de experiencia
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -168,16 +145,17 @@
                   <path d="M6 9l6 6l6 -6" />
                 </svg>
               </button>
-              <ul>
-                <li value="">Junior</li>
-                <li value="">Senior</li>
+              <ul name="experience-level" id="filter-experience-level">
+                <li value="junior">Junior</li>
+                <li value="senior">Senior</li>
+                <li value="mid">Mid-level</li>
               </ul>
             </div>
           </div>
         </form>
       </section>
 
-      <header>
+      <header id="resultados-de-busqueda">
         <h2>Resultados de la búsqueda</h2>
       </header>
 
