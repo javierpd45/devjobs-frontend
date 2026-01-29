@@ -140,6 +140,16 @@ header div a {
   /* TODO */
 }
 
+/* Para que el contenido ocupe todo el alto y el footer se quede abajo */
+#root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  main {
+    flex: 1;
+  }
+}
+
 /* Hero */
 main > section:nth-child(1) {
   height: 500px;

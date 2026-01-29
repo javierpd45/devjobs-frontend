@@ -1,0 +1,17 @@
+.formGroup input,
+.formGroup select {
+  border: 2px solid #d1d5db;
+  transition: border-color 0.2s ease;
+}
+
+.inputFocused {
+  border-color: #4f46e5 !important;
+  outline: 2px solid #4f46e5 !important;
+}
+
+.inputHint {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+}

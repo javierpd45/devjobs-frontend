@@ -1,4 +1,6 @@
 import { useId } from "react";
+import { useState } from "react";
+import styles from "./SearchFormSection.module.css";
 
 export function SearchFormSection({ onSearch, onTextFilter }) {
   const idText = useId();
@@ -6,10 +8,14 @@ export function SearchFormSection({ onSearch, onTextFilter }) {
   const idLocation = useId();
   const idExperienceLevel = useId();
 
+  // Estado para saber qué campo está enfocado
+  const [focusedField, setFocusedField] = useState(null);
+
   const handleSubmit = (event) => {
+    console.log("handleSubmit called");
     event.preventDefault();
 
-    const formData = new FormData(event.target);
+    const formData = new FormData(event.currentTarget);
 
     const filters = {
       technology: formData.get(idTechnology),
@@ -29,7 +35,7 @@ export function SearchFormSection({ onSearch, onTextFilter }) {
       <h1>Encuentra tu próximo trabajo</h1>
       <p>Explora miles de oportunidades en el sector tecnológico.</p>
 
-      <form onSubmit={handleSubmit} id="empleos-search-form" role="search">
+      <form onChange={handleSubmit} id="empleos-search-form" role="search">
         <div className="search-bar">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -54,11 +60,10 @@ export function SearchFormSection({ onSearch, onTextFilter }) {
             type="text"
             placeholder="Buscar trabajos, empresas o habilidades"
             onChange={handleTextChange}
+            onBlur={() => setFocusedField(null)}
+            onFocus={() => setFocusedField(idText)}
+            className={focusedField === idText ? styles.inputFocused : ""}
           />
-
-          <button type="submit" style={{ position: "absolute", right: "4px" }}>
-            Buscar
-          </button>
         </div>
 
         <div className="search-filters">
