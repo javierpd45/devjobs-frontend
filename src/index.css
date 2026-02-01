@@ -119,8 +119,7 @@ nav {
     transition: color 0.2s;
     font-weight: 500;
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: var(--primary);
       outline: none;
     }

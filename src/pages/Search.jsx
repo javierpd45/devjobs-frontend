@@ -1,80 +1,44 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Pagination } from "../components/Pagination.jsx";
 import { SearchFormSection } from "../components/SearchFormSection.jsx";
 import { JobListings } from "../components/JobListings.jsx";
-import jobsData from "../data.json";
+import { Loading } from "../components/Loading.jsx";
+import { useFilters } from "../hooks/useFilters.js";
+import { useFetchJobs } from "../hooks/useFetch.js";
 
-const RESULTS_PER_PAGE = 5;
+const RESULTS_PER_PAGE = 4;
 
 export function SearchPage() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [textFilter, setTextFilter] = useState("");
-  const [filters, setFilters] = useState({
-    technology: "",
-    location: "",
-    experienceLevel: "",
-  });
+  const {
+    currentPage,
+    handlePageChange,
+    handleSearch,
+    handleTextToFilter,
+    query,
+  } = useFilters();
 
-  const jobsFiltersByFilters = jobsData.filter((job) => {
-    const technologies = Array.isArray(job.data.technology)
-      ? job.data.technology.join(", ")
-      : job.data.technology;
+  const {
+    data: jobs,
+    total,
+    loading,
+  } = useFetchJobs(`https://jscamp-api.vercel.app/api/jobs?${query}`);
 
-    return (
-      (filters.technology === "" ||
-        technologies
-          .toLowerCase()
-          .includes(filters.technology.toLowerCase())) &&
-      (filters.location === "" ||
-        job.ubicacion.toLowerCase() === filters.location.toLowerCase()) &&
-      (filters.experienceLevel === "" ||
-        job.data.nivel.toLowerCase() === filters.experienceLevel.toLowerCase())
-    );
-  });
-
-  const jobsWithTextFilter =
-    textFilter === ""
-      ? jobsFiltersByFilters
-      : jobsFiltersByFilters.filter((job) => {
-          const text = textFilter.toLowerCase();
-          return job.titulo.toLowerCase().includes(text);
-        });
-
-  const totalPages = Math.ceil(jobsWithTextFilter.length / RESULTS_PER_PAGE);
-
-  const pageResults = jobsWithTextFilter.slice(
-    (currentPage - 1) * RESULTS_PER_PAGE,
-    currentPage * RESULTS_PER_PAGE,
-  );
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleSearch = (filters) => {
-    setCurrentPage(1);
-    setFilters(filters);
-  };
-
-  const handleTextFilter = (newTextFilter) => {
-    setTextFilter(newTextFilter);
-    setCurrentPage(1);
-  };
+  const totalPages = Math.ceil(jobs.length / RESULTS_PER_PAGE);
 
   useEffect(() => {
-    document.title = `Resultados: (${jobsWithTextFilter.length}, Página ${currentPage} - DevJobs)`;
-  }, [jobsWithTextFilter, currentPage]);
+    document.title = `Resultados: (${total}, Página ${currentPage} - DevJobs)`;
+  }, [total, currentPage]);
 
   return (
     <>
       <main>
         <SearchFormSection
           onSearch={handleSearch}
-          onTextFilter={handleTextFilter}
+          onTextToFilter={handleTextToFilter}
         />
 
         <section>
-          <JobListings jobs={pageResults} />
+          {loading ? <Loading /> : <JobListings jobs={jobs} />}
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

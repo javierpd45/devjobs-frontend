@@ -1,29 +1,21 @@
 import { Header } from "./components/Header.jsx";
 import { Footer } from "./components/Footer.jsx";
 
-import { HomePage } from "./pages/Home.jsx";
 import { SearchPage } from "./pages/Search.jsx";
+import { HomePage } from "./pages/Home.jsx";
 import { NoutFoundPage } from "./pages/404.jsx";
-import { useRouter } from "./hooks/useRouter.js";
+import { Route } from "./components/Route.jsx";
+import ContactPage from "./pages/Contact.jsx";
 
-function App() {
-  const { currentPath } = useRouter();
-
-  let page = <NoutFoundPage />;
-
-  if (currentPath === "/") {
-    page = <HomePage />;
-  } else if (currentPath.toLowerCase() === "/search") {
-    page = <SearchPage />;
-  }
-
+export default function App() {
   return (
     <>
       <Header />
-      {page}
+      <Route path="/" component={HomePage} />
+      <Route path="/search" component={SearchPage} />
+      <Route path="/404" component={NoutFoundPage} />
+      <Route path="/contact" component={ContactPage} />
       <Footer />
     </>
   );
 }
-
-export default App;
