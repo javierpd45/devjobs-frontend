@@ -5,7 +5,7 @@ export const useSearchForm = (
   idLocation,
   idExperienceLevel,
   onSearch,
-  onTextFilter,
+  onTextToFilter,
 ) => {
   const [searchText, setSearchText] = useState("");
 
@@ -26,7 +26,7 @@ export const useSearchForm = (
   const handleTextChange = (event) => {
     const text = event.target.value;
     setSearchText(text);
-    onTextFilter(text);
+    onTextToFilter(text);
   };
 
   return { searchText, handleSubmit, handleTextChange };

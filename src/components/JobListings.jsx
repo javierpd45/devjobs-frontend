@@ -6,7 +6,14 @@ export function JobListings({ jobs }) {
       <h2 style={{ textAlign: "center" }}>Resultados de búsqueda</h2>
 
       {jobs.length === 0 ? (
-        <p>No se encontraron empleos.</p>
+        <p
+          style={{
+            padding: "2rem",
+            textWrap: "balance",
+          }}
+        >
+          No se encontraron empleos.
+        </p>
       ) : (
         <div className="jobs-listings">
           {jobs.map((job) => (

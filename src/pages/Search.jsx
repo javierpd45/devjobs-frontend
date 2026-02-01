@@ -6,8 +6,6 @@ import { Loading } from "../components/Loading.jsx";
 import { useFilters } from "../hooks/useFilters.js";
 import { useFetchJobs } from "../hooks/useFetch.js";
 
-const RESULTS_PER_PAGE = 4;
-
 export function SearchPage() {
   const {
     currentPage,
@@ -15,6 +13,11 @@ export function SearchPage() {
     handleSearch,
     handleTextToFilter,
     query,
+    RESULTS_PER_PAGE,
+    handleClear,
+    hasFilters,
+    filters,
+    textToFilter,
   } = useFilters();
 
   const {
@@ -23,7 +26,7 @@ export function SearchPage() {
     loading,
   } = useFetchJobs(`https://jscamp-api.vercel.app/api/jobs?${query}`);
 
-  const totalPages = Math.ceil(jobs.length / RESULTS_PER_PAGE);
+  const totalPages = Math.ceil(total / RESULTS_PER_PAGE);
 
   useEffect(() => {
     document.title = `Resultados: (${total}, Página ${currentPage} - DevJobs)`;
@@ -35,6 +38,10 @@ export function SearchPage() {
         <SearchFormSection
           onSearch={handleSearch}
           onTextToFilter={handleTextToFilter}
+          onClear={handleClear}
+          hasFilters={hasFilters}
+          filters={filters}
+          textToFilter={textToFilter}
         />
 
         <section>
