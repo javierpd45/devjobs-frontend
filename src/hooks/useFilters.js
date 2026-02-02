@@ -24,7 +24,6 @@ export const useFilters = () => {
   useEffect(() => {
     localStorage.setItem("filters", JSON.stringify(filters));
     localStorage.setItem("textToFilter", textToFilter);
-    console.log("Filters or textToFilter changed");
   }, [filters, textToFilter]);
 
   const hasFilters =

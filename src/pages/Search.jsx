@@ -1,12 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Pagination } from "../components/Pagination.jsx";
 import { SearchFormSection } from "../components/SearchFormSection.jsx";
 import { JobListings } from "../components/JobListings.jsx";
 import { Loading } from "../components/Loading.jsx";
 import { useFilters } from "../hooks/useFilters.js";
 import { useFetchJobs } from "../hooks/useFetch.js";
+import { ErrorComponent } from "../components/ErrorComponent.jsx";
 
 export function SearchPage() {
+  const [retryCount, setRetryCount] = useState(0);
+
   const {
     currentPage,
     handlePageChange,
@@ -20,17 +23,19 @@ export function SearchPage() {
     textToFilter,
   } = useFilters();
 
-  const {
-    data: jobs,
-    total,
-    loading,
-  } = useFetchJobs(`https://jscamp-api.vercel.app/api/jobs?${query}`);
+  const url = `https://jscamp-api.vercel.app/api/jobs?${query}`;
+
+  const { data: jobs, total, loading, error } = useFetchJobs(url, retryCount);
 
   const totalPages = Math.ceil(total / RESULTS_PER_PAGE);
 
   useEffect(() => {
     document.title = `Resultados: (${total}, Página ${currentPage} - DevJobs)`;
   }, [total, currentPage]);
+
+  const handleRetry = () => {
+    setRetryCount(retryCount + 1);
+  };
 
   return (
     <>
@@ -45,7 +50,13 @@ export function SearchPage() {
         />
 
         <section>
-          {loading ? <Loading /> : <JobListings jobs={jobs} />}
+          {error ? (
+            <ErrorComponent message={error} onRetry={handleRetry} />
+          ) : loading ? (
+            <Loading />
+          ) : (
+            <JobListings jobs={jobs} />
+          )}
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
