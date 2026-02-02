@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Pagination } from "../components/Pagination.jsx";
 import { SearchFormSection } from "../components/SearchFormSection.jsx";
 import { JobListings } from "../components/JobListings.jsx";
@@ -29,9 +29,12 @@ export function SearchPage() {
 
   const totalPages = Math.ceil(total / RESULTS_PER_PAGE);
 
-  useEffect(() => {
-    document.title = `Resultados: (${total}, Página ${currentPage} - DevJobs)`;
-  }, [total, currentPage]);
+  const getTitle = () => {
+    if (loading) return "Cargando empleos...";
+    if (error) return "Error al cargar empleos";
+    if (total === 0) return "No se encontraron empleos";
+    return `Resultados: ${total}, Página ${currentPage} - DevJobs`;
+  };
 
   const handleRetry = () => {
     setRetryCount(retryCount + 1);
@@ -40,6 +43,8 @@ export function SearchPage() {
   return (
     <>
       <main>
+        <title>{getTitle()}</title>
+
         <SearchFormSection
           onSearch={handleSearch}
           onTextToFilter={handleTextToFilter}
@@ -50,6 +55,8 @@ export function SearchPage() {
         />
 
         <section>
+          <h2 style={{ textAlign: "center" }}>Resultados de búsqueda</h2>
+
           {error ? (
             <ErrorComponent message={error} onRetry={handleRetry} />
           ) : loading ? (

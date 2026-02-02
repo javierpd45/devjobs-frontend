@@ -4,7 +4,7 @@ const RESULTS_PER_PAGE = 4;
 
 export const useFilters = () => {
   const [filters, setFilters] = useState(() => {
-    const storageFilters = localStorage.getItem("filters");
+    const storageFilters = localStorage.getItem("jobApp_filters");
     return {
       technology: storageFilters ? JSON.parse(storageFilters).technology : "",
       location: storageFilters ? JSON.parse(storageFilters).location : "",
@@ -17,13 +17,13 @@ export const useFilters = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [textToFilter, setTextToFilter] = useState(() => {
-    const storageTextToFilter = localStorage.getItem("textToFilter");
+    const storageTextToFilter = localStorage.getItem("jobApp_textToFilter");
     return storageTextToFilter ? storageTextToFilter : "";
   });
 
   useEffect(() => {
-    localStorage.setItem("filters", JSON.stringify(filters));
-    localStorage.setItem("textToFilter", textToFilter);
+    localStorage.setItem("jobApp_filters", JSON.stringify(filters));
+    localStorage.setItem("jobApp_textToFilter", textToFilter);
   }, [filters, textToFilter]);
 
   const hasFilters =
@@ -103,8 +103,8 @@ export const useFilters = () => {
     });
     setTextToFilter("");
     setCurrentPage(1);
-    localStorage.removeItem("filters");
-    localStorage.removeItem("textToFilter");
+    localStorage.removeItem("jobApp_filters");
+    localStorage.removeItem("jobApp_textToFilter");
   };
 
   return {

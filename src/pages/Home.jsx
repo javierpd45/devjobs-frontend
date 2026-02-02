@@ -16,6 +16,7 @@ export function HomePage() {
   };
   return (
     <main>
+      <title>DevJobs - Encuentra el trabajo de tus sueños</title>
       <section>
         <img src="./background.webp" width="200" />
 

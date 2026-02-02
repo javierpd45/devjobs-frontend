@@ -1,5 +1,4 @@
-import { useId } from "react";
-import { useState } from "react";
+import { useId, useState } from "react";
 import styles from "./SearchFormSection.module.css";
 import { useSearchForm } from "../hooks/useSearchForm";
 
@@ -19,12 +18,14 @@ export function SearchFormSection({
   // Estado para saber qué campo está enfocado
   const [focusedField, setFocusedField] = useState(null);
 
-  const { handleSubmit, handleTextChange } = useSearchForm(
+  const { searchText, handleSubmit, handleTextChange } = useSearchForm(
     idTechnology,
     idLocation,
     idExperienceLevel,
+    idText,
     onSearch,
     onTextToFilter,
+    textToFilter,
   );
 
   const handleSelectChange = (event) => {
@@ -73,7 +74,7 @@ export function SearchFormSection({
             type="text"
             placeholder="Buscar trabajos, empresas o habilidades"
             onChange={handleTextChange}
-            value={textToFilter}
+            value={searchText}
             onBlur={() => setFocusedField(null)}
             onFocus={() => setFocusedField(idText)}
             className={focusedField === idText ? styles.inputFocused : ""}
