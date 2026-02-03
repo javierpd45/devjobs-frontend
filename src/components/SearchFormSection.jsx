@@ -18,7 +18,7 @@ export function SearchFormSection({
   // Estado para saber qué campo está enfocado
   const [focusedField, setFocusedField] = useState(null);
 
-  const { searchText, handleSubmit, handleTextChange } = useSearchForm(
+  const { searchText, handleSubmit } = useSearchForm(
     idTechnology,
     idLocation,
     idExperienceLevel,
@@ -73,7 +73,7 @@ export function SearchFormSection({
             id="empleos-search-input"
             type="text"
             placeholder="Buscar trabajos, empresas o habilidades"
-            onChange={handleTextChange}
+            onChange={handleSubmit}
             value={searchText}
             onBlur={() => setFocusedField(null)}
             onFocus={() => setFocusedField(idText)}

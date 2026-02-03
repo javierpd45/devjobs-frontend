@@ -44,9 +44,19 @@ export function Pagination({
     }
   };
 
+  const buildPageUrl = (page) => {
+    const url = new URL(window.location);
+    url.searchParams.set("page", page);
+    return `${url.pathname}?${url.searchParams.toString()}`;
+  };
+
   return (
     <nav className={styles.pagination}>
-      <a href="#" style={styleLinkLeft} onClick={handlePrevious}>
+      <a
+        href={buildPageUrl(currentPage - 1)}
+        style={styleLinkLeft}
+        onClick={handlePrevious}
+      >
         <svg
           width="16"
           height="16"
@@ -65,7 +75,7 @@ export function Pagination({
       {pages.map((page) => (
         <a
           key={page}
-          href="#"
+          href={buildPageUrl(page)}
           className={currentPage === page ? styles.isActive : ""}
           onClick={(event) => handlePageClick(event, page)}
         >
@@ -73,7 +83,11 @@ export function Pagination({
         </a>
       ))}
 
-      <a href="#" style={styleLinkRight} onClick={handleNext}>
+      <a
+        href={buildPageUrl(currentPage + 1)}
+        style={styleLinkRight}
+        onClick={handleNext}
+      >
         <svg
           width="16"
           height="16"

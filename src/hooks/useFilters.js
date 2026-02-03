@@ -1,30 +1,38 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "./useRouter";
 
 const RESULTS_PER_PAGE = 4;
 
 export const useFilters = () => {
   const [filters, setFilters] = useState(() => {
     const storageFilters = localStorage.getItem("jobApp_filters");
+    const params = new URLSearchParams(window.location.search);
     return {
-      technology: storageFilters ? JSON.parse(storageFilters).technology : "",
-      location: storageFilters ? JSON.parse(storageFilters).location : "",
+      technology: storageFilters
+        ? JSON.parse(storageFilters).technology
+        : params.get("technology") || "",
+      location: storageFilters
+        ? JSON.parse(storageFilters).location
+        : params.get("type") || "",
       experienceLevel: storageFilters
         ? JSON.parse(storageFilters).experienceLevel
-        : "",
+        : params.get("level") || "",
     };
   });
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get("page");
+    return Number.isNaN(Number(page)) || page === null ? 1 : Number(page);
+  });
 
   const [textToFilter, setTextToFilter] = useState(() => {
     const storageTextToFilter = localStorage.getItem("jobApp_textToFilter");
-    return storageTextToFilter ? storageTextToFilter : "";
+    const params = new URLSearchParams(window.location.search);
+    return storageTextToFilter ? storageTextToFilter : params.get("text") || "";
   });
 
-  useEffect(() => {
-    localStorage.setItem("jobApp_filters", JSON.stringify(filters));
-    localStorage.setItem("jobApp_textToFilter", textToFilter);
-  }, [filters, textToFilter]);
+  const { navigateTo } = useRouter();
 
   const hasFilters =
     filters.technology !== "" ||
@@ -33,6 +41,32 @@ export const useFilters = () => {
     textToFilter !== ""
       ? true
       : false;
+
+  // Guardar filtros en el localStorage
+  useEffect(() => {
+    if (hasFilters) {
+      localStorage.setItem("jobApp_filters", JSON.stringify(filters));
+      localStorage.setItem("jobApp_textToFilter", textToFilter);
+    }
+  }, [filters, textToFilter, hasFilters]);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    if (textToFilter) params.append("text", textToFilter);
+    if (filters.technology) params.append("technology", filters.technology);
+    if (filters.location) params.append("type", filters.location);
+    if (filters.experienceLevel)
+      params.append("level", filters.experienceLevel);
+
+    if (currentPage > 1) params.append("page", currentPage);
+
+    const newUrl = params.toString()
+      ? `${window.location.pathname}?${params.toString()}`
+      : window.location.pathname;
+
+    navigateTo(newUrl);
+  }, [filters, currentPage, textToFilter, navigateTo]);
 
   //#region Datos filtrados en el frontend, comentado porque se debe hacer en el backend
   // const jobsFiltersByFilters = jobsData.filter((job) => {
