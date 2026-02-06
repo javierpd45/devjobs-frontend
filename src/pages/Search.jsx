@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Pagination } from "../components/Pagination.jsx";
-import { SearchFormSection } from "../components/SearchFormSection.jsx";
-import { JobListings } from "../components/JobListings.jsx";
-import { Loading } from "../components/Loading.jsx";
+import { Pagination } from "../components/Pagination/Pagination.jsx";
+import { SearchFormSection } from "../components/SearchFormSection/SearchFormSection.jsx";
+import { JobListings } from "../components/JobListings/JobListings.jsx";
+import { Loading } from "../components/Loading/Loading.jsx";
 import { useFilters } from "../hooks/useFilters.js";
 import { useFetchJobs } from "../hooks/useFetch.js";
-import { ErrorComponent } from "../components/ErrorComponent.jsx";
+import { ErrorComponent } from "../components/ErrorComponent/ErrorComponent.jsx";
 
 export function SearchPage() {
   const [retryCount, setRetryCount] = useState(0);

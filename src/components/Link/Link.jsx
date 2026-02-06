@@ -1,5 +1,5 @@
 import { Link as NavLink } from "react-router";
-import { useRouter } from "../hooks/useRouter.js";
+import { useRouter } from "../../hooks/useRouter.js";
 import styles from "./Link.module.css";
 
 export function Link({ href, children, ...restOfProps }) {

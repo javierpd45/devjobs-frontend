@@ -1,6 +1,6 @@
 import { useId, useState } from "react";
 import styles from "./SearchFormSection.module.css";
-import { useSearchForm } from "../hooks/useSearchForm";
+import { useSearchForm } from "../../hooks/useSearchForm";
 
 export function SearchFormSection({
   onSearch,

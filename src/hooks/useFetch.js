@@ -13,6 +13,7 @@ export function useFetchJobs(url, retryCount) {
 
     // Cancelar la petición si el componente se desmonta antes de que termine.
     const controller = new AbortController();
+    let isCurrent = true;
 
     async function fetchJobs() {
       const signal = controller.signal;
@@ -23,11 +24,11 @@ export function useFetchJobs(url, retryCount) {
 
         const response = await fetch(url, { signal });
         if (!response.ok) {
-          throw new HttpError(
-            response.status,
-            response.statusText,
-            response.url,
-          );
+          throw new HttpError({
+            status: response.status,
+            statusText: response.statusText,
+            url: response.url,
+          });
         }
         const json = await response.json();
 
@@ -55,13 +56,16 @@ export function useFetchJobs(url, retryCount) {
         console.error("Error fetching jobs:", errorInfo);
         // }
       } finally {
-        setLoading(false);
+        if (isCurrent) setLoading(false);
       }
     }
     fetchJobs();
 
     // Función de limpieza: Se ejecuta si el usuario cambia de página rápidamente.
-    return () => controller.abort();
+    return () => {
+      isCurrent = false;
+      controller.abort();
+    };
   }, [url, retryCount]);
 
   return { data, loading, error, total };

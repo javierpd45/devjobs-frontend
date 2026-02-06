@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { Link } from "../Link/Link.jsx";
+import styles from "./JobCard.module.css";
 
 export function JobCard({ job }) {
-  const { titulo, empresa, ubicacion, descripcion } = job;
+  const { titulo, empresa, ubicacion, descripcion, id } = job;
   const { modalidad, nivel, technology } = job.data;
 
   const [isApplied, setIsApplied] = useState(false);
@@ -24,15 +26,24 @@ export function JobCard({ job }) {
       data-technology={technology}
     >
       <div>
-        <h3>{titulo}</h3>
+        <h3>
+          <Link className={styles.title} href={`/jobs/${id}`}>
+            {titulo}
+          </Link>
+        </h3>
         <small>
           {empresa} | {ubicacion}
         </small>
         <p>{descripcion}</p>
       </div>
-      <button className={buttonClasses} onClick={handleApplyClick}>
-        {buttonText}
-      </button>
+      <div className={styles.actions}>
+        <Link href={`/jobs/${id}`} className={styles.details}>
+          Ver detalles
+        </Link>
+        <button className={buttonClasses} onClick={handleApplyClick}>
+          {buttonText}
+        </button>
+      </div>
     </article>
   );
 }
