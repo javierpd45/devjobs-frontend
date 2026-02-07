@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 
+// Desactivar locaStorage para simular un entorno sin localStorage (por ejemplo, cuando el usuario tiene desactivado el almacenamiento local o en navegadores que no lo soportan)
+// Object.defineProperty(window, "localStorage", { value: null });
+
 const RESULTS_PER_PAGE = 4;
 
 export const useFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [filters, setFilters] = useState(() => {
-    const storageFilters = localStorage.getItem("jobApp_filters");
+    const storageFilters = localStorage?.getItem("jobApp_filters");
     return {
       technology: storageFilters
         ? JSON.parse(storageFilters).technology
@@ -23,7 +26,7 @@ export const useFilters = () => {
 
   const [currentPage, setCurrentPage] = useState(() => {
     const page = searchParams.get("page");
-    const storagePage = localStorage.getItem("jobApp_currentPage");
+    const storagePage = localStorage?.getItem("jobApp_currentPage");
     return storagePage
       ? Number(storagePage)
       : Number.isNaN(Number(page)) || page === null
@@ -32,7 +35,7 @@ export const useFilters = () => {
   });
 
   const [textToFilter, setTextToFilter] = useState(() => {
-    const storageTextToFilter = localStorage.getItem("jobApp_textToFilter");
+    const storageTextToFilter = localStorage?.getItem("jobApp_textToFilter");
     return storageTextToFilter
       ? storageTextToFilter
       : searchParams.get("text") || "";
@@ -50,9 +53,9 @@ export const useFilters = () => {
   // Guardar filtros en el localStorage
   useEffect(() => {
     if (hasFilters) {
-      localStorage.setItem("jobApp_filters", JSON.stringify(filters));
-      localStorage.setItem("jobApp_textToFilter", textToFilter);
-      localStorage.setItem("jobApp_currentPage", currentPage.toString());
+      localStorage?.setItem("jobApp_filters", JSON.stringify(filters));
+      localStorage?.setItem("jobApp_textToFilter", textToFilter);
+      localStorage?.setItem("jobApp_currentPage", currentPage.toString());
     }
 
     if (
@@ -63,9 +66,9 @@ export const useFilters = () => {
       filters.experienceLevel === "" &&
       textToFilter === ""
     ) {
-      localStorage.removeItem("jobApp_filters");
-      localStorage.removeItem("jobApp_textToFilter");
-      localStorage.removeItem("jobApp_currentPage");
+      localStorage?.removeItem("jobApp_filters");
+      localStorage?.removeItem("jobApp_textToFilter");
+      localStorage?.removeItem("jobApp_currentPage");
     }
   }, [filters, textToFilter, hasFilters, currentPage]);
 
@@ -120,9 +123,9 @@ export const useFilters = () => {
 
     setTextToFilter("");
     setCurrentPage(1);
-    localStorage.removeItem("jobApp_filters");
-    localStorage.removeItem("jobApp_textToFilter");
-    localStorage.removeItem("jobApp_currentPage");
+    localStorage?.removeItem("jobApp_filters");
+    localStorage?.removeItem("jobApp_textToFilter");
+    localStorage?.removeItem("jobApp_currentPage");
   };
 
   return {
