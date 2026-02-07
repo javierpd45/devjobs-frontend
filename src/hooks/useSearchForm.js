@@ -9,7 +9,7 @@ export const useSearchForm = (
   onTextToFilter,
   textToFilter,
 ) => {
-  const [searchText, setSearchText] = useState(textToFilter);
+  const [searchText, setSearchText] = useState(() => textToFilter);
   const timeoutId = useRef(null);
 
   useEffect(() => {

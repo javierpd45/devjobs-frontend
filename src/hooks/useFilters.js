@@ -1,44 +1,49 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "./useRouter";
+import { useSearchParams } from "react-router";
 
 const RESULTS_PER_PAGE = 4;
 
 export const useFilters = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [filters, setFilters] = useState(() => {
     const storageFilters = localStorage.getItem("jobApp_filters");
-    const params = new URLSearchParams(window.location.search);
     return {
       technology: storageFilters
         ? JSON.parse(storageFilters).technology
-        : params.get("technology") || "",
+        : searchParams.get("technology") || "",
       location: storageFilters
         ? JSON.parse(storageFilters).location
-        : params.get("type") || "",
+        : searchParams.get("type") || "",
       experienceLevel: storageFilters
         ? JSON.parse(storageFilters).experienceLevel
-        : params.get("level") || "",
+        : searchParams.get("level") || "",
     };
   });
 
   const [currentPage, setCurrentPage] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    const page = params.get("page");
-    return Number.isNaN(Number(page)) || page === null ? 1 : Number(page);
+    const page = searchParams.get("page");
+    const storagePage = localStorage.getItem("jobApp_currentPage");
+    return storagePage
+      ? Number(storagePage)
+      : Number.isNaN(Number(page)) || page === null
+        ? 1
+        : Number(page);
   });
 
   const [textToFilter, setTextToFilter] = useState(() => {
     const storageTextToFilter = localStorage.getItem("jobApp_textToFilter");
-    const params = new URLSearchParams(window.location.search);
-    return storageTextToFilter ? storageTextToFilter : params.get("text") || "";
+    return storageTextToFilter
+      ? storageTextToFilter
+      : searchParams.get("text") || "";
   });
-
-  const { navigateTo } = useRouter();
 
   const hasFilters =
     filters.technology !== "" ||
     filters.location !== "" ||
     filters.experienceLevel !== "" ||
-    textToFilter !== ""
+    textToFilter !== "" ||
+    currentPage !== 1
       ? true
       : false;
 
@@ -47,72 +52,42 @@ export const useFilters = () => {
     if (hasFilters) {
       localStorage.setItem("jobApp_filters", JSON.stringify(filters));
       localStorage.setItem("jobApp_textToFilter", textToFilter);
+      localStorage.setItem("jobApp_currentPage", currentPage.toString());
     }
-  }, [filters, textToFilter, hasFilters]);
 
+    if (
+      // Limpiar localStorage si no hay filtros activos y estamos en la página 1
+      currentPage === 1 &&
+      filters.technology === "" &&
+      filters.location === "" &&
+      filters.experienceLevel === "" &&
+      textToFilter === ""
+    ) {
+      localStorage.removeItem("jobApp_filters");
+      localStorage.removeItem("jobApp_textToFilter");
+      localStorage.removeItem("jobApp_currentPage");
+    }
+  }, [filters, textToFilter, hasFilters, currentPage]);
+
+  // Sincronizar los filtros con los parámetros de búsqueda en la URL
   useEffect(() => {
-    const params = new URLSearchParams();
+    setSearchParams(() => {
+      const params = new URLSearchParams(); // Limpiar los parámetros antes de establecer los nuevos para no mostrar limit y offset en la URL
+      if (textToFilter) params.set("text", textToFilter);
+      if (filters.technology) params.set("technology", filters.technology);
+      if (filters.location) params.set("type", filters.location);
+      if (filters.experienceLevel) params.set("level", filters.experienceLevel);
 
-    if (textToFilter) params.append("text", textToFilter);
-    if (filters.technology) params.append("technology", filters.technology);
-    if (filters.location) params.append("type", filters.location);
-    if (filters.experienceLevel)
-      params.append("level", filters.experienceLevel);
+      if (currentPage > 1) params.set("page", currentPage);
 
-    if (currentPage > 1) params.append("page", currentPage);
+      return params;
+    });
+  }, [filters, currentPage, textToFilter, setSearchParams]);
 
-    const newUrl = params.toString()
-      ? `${window.location.pathname}?${params.toString()}`
-      : window.location.pathname;
-
-    navigateTo(newUrl);
-  }, [filters, currentPage, textToFilter, navigateTo]);
-
-  //#region Datos filtrados en el frontend, comentado porque se debe hacer en el backend
-  // const jobsFiltersByFilters = jobsData.filter((job) => {
-  //   const technologies = Array.isArray(job.data.technology)
-  //     ? job.data.technology.join(", ")
-  //     : job.data.technology;
-
-  //   return (
-  //     (filters.technology === "" ||
-  //       technologies
-  //         .toLowerCase()
-  //         .includes(filters.technology.toLowerCase())) &&
-  //     (filters.location === "" ||
-  //       job.ubicacion.toLowerCase() === filters.location.toLowerCase()) &&
-  //     (filters.experienceLevel === "" ||
-  //       job.data.nivel.toLowerCase() === filters.experienceLevel.toLowerCase())
-  //   );
-  // });
-
-  // const jobsWithtextToFilter =
-  //   textToFilter === ""
-  //     ? jobsFiltersByFilters
-  //     : jobsFiltersByFilters.filter((job) => {
-  //         const text = textToFilter.toLowerCase();
-  //         return job.titulo.toLowerCase().includes(text);
-  //       });
-  //#endregion
-
-  //#region Datos paginados en el frontend, comentado porque se debe hacer en el backend
-  // const pageResults = jobs.slice(
-  //   (currentPage - 1) * RESULTS_PER_PAGE,
-  //   currentPage * RESULTS_PER_PAGE,
-  // );
-  //#endregion
-
-  // const totalPages = Math.ceil(jobs.length / RESULTS_PER_PAGE);
-
-  const params = new URLSearchParams();
-  if (textToFilter) params.append("text", textToFilter);
-  if (filters.technology) params.append("technology", filters.technology);
-  if (filters.location) params.append("type", filters.location);
-  if (filters.experienceLevel) params.append("level", filters.experienceLevel);
-
+  // Calcular el offset para la paginación
   const offset = (currentPage - 1) * RESULTS_PER_PAGE;
-  params.append("limit", RESULTS_PER_PAGE);
-  params.append("offset", offset);
+  searchParams.set("limit", RESULTS_PER_PAGE);
+  searchParams.set("offset", offset);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -135,14 +110,23 @@ export const useFilters = () => {
       location: "",
       experienceLevel: "",
     });
+
+    // Limpiar los parámetros de búsqueda en la URL
+    searchParams.delete("technology");
+    searchParams.delete("type");
+    searchParams.delete("level");
+    searchParams.delete("text");
+    searchParams.delete("page");
+
     setTextToFilter("");
     setCurrentPage(1);
     localStorage.removeItem("jobApp_filters");
     localStorage.removeItem("jobApp_textToFilter");
+    localStorage.removeItem("jobApp_currentPage");
   };
 
   return {
-    query: params.toString(),
+    query: searchParams.toString(),
     currentPage,
     RESULTS_PER_PAGE,
     hasFilters,
