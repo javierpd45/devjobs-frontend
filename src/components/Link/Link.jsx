@@ -1,18 +1,25 @@
-import { Link as NavLink } from "react-router";
-import { useRouter } from "../../hooks/useRouter.js";
+import { Link as AppLink, NavLink as HeaderLink } from "react-router";
 import styles from "./Link.module.css";
 
 export function Link({ href, children, ...restOfProps }) {
-  const { currentPath } = useRouter();
-  const isActive = currentPath === href;
+  // const { currentPath } = useRouter();
+  // const isActive = currentPath === href;
 
   return (
-    <NavLink
-      className={isActive ? styles.active : ""}
+    <AppLink to={href} {...restOfProps}>
+      {children}
+    </AppLink>
+  );
+}
+
+export function NavLink({ href, children, ...restOfProps }) {
+  return (
+    <HeaderLink
+      className={({ isActive }) => (isActive ? styles.navLinkActive : "")}
       to={href}
       {...restOfProps}
     >
       {children}
-    </NavLink>
+    </HeaderLink>
   );
 }

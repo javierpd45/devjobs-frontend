@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-export default function ContactPage() {
+export function ContactPage() {
   const nameId = useId();
   const emailId = useId();
   const messageId = useId();
@@ -135,3 +135,5 @@ const styles = {
     transition: "background-color 0.2s",
   },
 };
+
+export default ContactPage;

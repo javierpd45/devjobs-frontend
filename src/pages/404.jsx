@@ -24,3 +24,5 @@ export function NotFoundPage() {
     </main>
   );
 }
+
+export default NotFoundPage;

@@ -103,3 +103,5 @@ export function JobDetail() {
     </main>
   );
 }
+
+export default JobDetail;

@@ -1,4 +1,4 @@
-import { Link } from "../Link/Link";
+import { Link, NavLink } from "../Link/Link";
 
 export function Header() {
   return (
@@ -22,8 +22,8 @@ export function Header() {
       </Link>
 
       <nav>
-        <Link href="/search">Empleos</Link>
-        <Link href="/contact">Contacto</Link>
+        <NavLink href="/search">Empleos</NavLink>
+        <NavLink href="/contact">Contacto</NavLink>
       </nav>
 
       <div>
