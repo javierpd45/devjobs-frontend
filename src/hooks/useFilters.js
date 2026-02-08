@@ -45,14 +45,13 @@ export const useFilters = () => {
     filters.technology !== "" ||
     filters.location !== "" ||
     filters.experienceLevel !== "" ||
-    textToFilter !== "" ||
-    currentPage !== 1
+    textToFilter !== ""
       ? true
       : false;
 
   // Guardar filtros en el localStorage
   useEffect(() => {
-    if (hasFilters) {
+    if (hasFilters || currentPage !== 1) {
       localStorage?.setItem("jobApp_filters", JSON.stringify(filters));
       localStorage?.setItem("jobApp_textToFilter", textToFilter);
       localStorage?.setItem("jobApp_currentPage", currentPage.toString());
