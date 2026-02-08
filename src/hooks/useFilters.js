@@ -12,33 +12,46 @@ export const useFilters = () => {
   const [filters, setFilters] = useState(() => {
     const storageFilters = localStorage?.getItem("jobApp_filters");
     return {
-      technology: storageFilters
-        ? JSON.parse(storageFilters).technology
-        : searchParams.get("technology") || "",
-      location: storageFilters
-        ? JSON.parse(storageFilters).location
-        : searchParams.get("type") || "",
-      experienceLevel: storageFilters
-        ? JSON.parse(storageFilters).experienceLevel
-        : searchParams.get("level") || "",
+      technology: searchParams.get("technology")
+        ? searchParams.get("technology")
+        : storageFilters && searchParams.toString().length === 0
+          ? JSON.parse(storageFilters).technology
+          : "",
+      location: searchParams.get("type")
+        ? searchParams.get("type")
+        : storageFilters && searchParams.toString().length === 0
+          ? JSON.parse(storageFilters).location
+          : "",
+      experienceLevel: searchParams.get("level")
+        ? searchParams.get("level")
+        : storageFilters && searchParams.toString().length === 0
+          ? JSON.parse(storageFilters).experienceLevel
+          : "",
     };
   });
 
   const [currentPage, setCurrentPage] = useState(() => {
     const page = searchParams.get("page");
     const storagePage = localStorage?.getItem("jobApp_currentPage");
-    return storagePage
-      ? Number(storagePage)
-      : Number.isNaN(Number(page)) || page === null
-        ? 1
-        : Number(page);
+
+    if (page !== null || storagePage !== null) {
+      if (Number.isNaN(Number(page)) || page === null) {
+        return storagePage && searchParams.toString().length === 0
+          ? Number(storagePage)
+          : 1;
+      }
+      return Number(page);
+    }
+    return 1;
   });
 
   const [textToFilter, setTextToFilter] = useState(() => {
     const storageTextToFilter = localStorage?.getItem("jobApp_textToFilter");
-    return storageTextToFilter
-      ? storageTextToFilter
-      : searchParams.get("text") || "";
+    return searchParams.get("text")
+      ? searchParams.get("text")
+      : storageTextToFilter && searchParams.toString().length === 0
+        ? storageTextToFilter
+        : "";
   });
 
   const hasFilters =

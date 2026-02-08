@@ -1,3 +1,5 @@
+import { useRouter } from "../../hooks/useRouter.js";
+import { useSearchParams } from "react-router";
 import styles from "./Pagination.module.css";
 
 export function Pagination({
@@ -5,6 +7,9 @@ export function Pagination({
   totalPages = 1,
   onPageChange = () => {},
 }) {
+  const { currentPath } = useRouter();
+  const [searchParams] = useSearchParams();
+
   // Generar un array de paginas a mostrar
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
@@ -45,10 +50,16 @@ export function Pagination({
   };
 
   const buildPageUrl = (page) => {
-    const url = new URL(window.location);
-    url.searchParams.set("page", page);
-    return `${url.pathname}?${url.searchParams.toString()}`;
+    const params = new URLSearchParams(searchParams);
+    params.set("page", page);
+    return `${currentPath}?${params.toString()}`;
   };
+
+  // const buildPageUrl = (page) => {
+  //   const url = new URL(window.location);
+  //   url.searchParams.set("page", page);
+  //   return `${url.pathname}?${url.searchParams.toString()}`;
+  // };
 
   return (
     <nav className={styles.pagination}>
