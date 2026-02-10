@@ -1,4 +1,6 @@
-import { DetailApplyButton } from "./DetailApplyButton";
+import { ApplyButton } from "../ApplyButton/ApplyButton";
+import { FavoriteButton } from "../FavoriteButton/FavoriteButton";
+// import { DetailApplyButton } from "./DetailApplyButton";
 import styles from "./DetailPageHeader.module.css";
 
 export function DetailPageHeader({ job }) {
@@ -11,7 +13,8 @@ export function DetailPageHeader({ job }) {
         </p>
       </header>
 
-      <DetailApplyButton />
+      <ApplyButton />
+      <FavoriteButton jobId={job.id} />
     </>
   );
 }

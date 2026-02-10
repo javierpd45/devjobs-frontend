@@ -1,8 +1,14 @@
 import { Link, NavLink } from "../Link/Link";
 // import { useAuth } from "../../context/AuthContext.jsx";
 import { useAuthStore } from "../../store/authStore.js";
+import { useFavoritesStore } from "../../store/favoritesStore.js";
 
 export function Header() {
+  const { isLoggedIn } = useAuthStore();
+  const { countFavorites } = useFavoritesStore();
+
+  const numberOfFavorites = countFavorites();
+
   return (
     <header>
       <Link href="/" style={{ textDecoration: "none" }}>
@@ -26,6 +32,9 @@ export function Header() {
       <nav>
         <NavLink href="/search">Empleos</NavLink>
         <NavLink href="/contact">Contacto</NavLink>
+        {isLoggedIn && (
+          <NavLink href="/profile">Profile (❤️ {numberOfFavorites})</NavLink>
+        )}
       </nav>
 
       <HeaderUserButton />
