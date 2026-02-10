@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import { HttpError } from "../utils/HttpError.js";
 import { Loading } from "../components/Loading/Loading.jsx";
 import { NotFoundPage } from "./404.jsx";
-import { Link } from "../components/Link/Link.jsx";
-import styles from "./Detail.module.css";
 import { JobSection } from "../components/JobSection/JobSection.jsx";
+
+import { DetailPageHeader } from "../components/DetailPageComponents/DetailPageHeader.jsx";
+import { DetailPageBreadCrumb } from "../components/DetailPageComponents/DetailPageBreadCrumb.jsx";
 
 export function JobDetail() {
   const { jobId } = useParams();
@@ -71,24 +72,9 @@ export function JobDetail() {
   return (
     <main>
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 1rem" }}>
-        <div className={styles.container}>
-          <nav className={styles.breadcrumb}>
-            <Link href={"/search"} className={styles.breadcrumbButton}>
-              Empleos
-            </Link>
-            <span className={styles.breadcrumbSeparator}>/</span>
-            <span className={styles.breadcrumbCurrent}>{job.titulo}</span>
-          </nav>
-        </div>
+        <DetailPageBreadCrumb job={job} />
+        <DetailPageHeader job={job} />
 
-        <header className={styles.header}>
-          <h1 className={styles.title}>{job.titulo}</h1>
-          <p className={styles.meta}>
-            {job.empresa} | {job.ubicacion}
-          </p>
-        </header>
-
-        <button className={styles.applyButton}>Aplicar ahora</button>
         <JobSection
           title="Descripción del puesto"
           content={job.content.description}

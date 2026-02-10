@@ -1,4 +1,5 @@
 import { Link, NavLink } from "../Link/Link";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 export function Header() {
   return (
@@ -26,7 +27,9 @@ export function Header() {
         <NavLink href="/contact">Contacto</NavLink>
       </nav>
 
-      <div>
+      <HeaderUserButton />
+
+      {/* <div>
         <devjobs-avatar
           service="google"
           username="google.com"
@@ -44,7 +47,16 @@ export function Header() {
           username="vercel.com"
           size="32"
         ></devjobs-avatar>
-      </div>
+      </div> */}
     </header>
   );
 }
+
+const HeaderUserButton = () => {
+  const { isLoggedIn, login, logout } = useAuth();
+  return isLoggedIn ? (
+    <button onClick={logout}>Cerrar sesión</button>
+  ) : (
+    <button onClick={login}>Iniciar sesión</button>
+  );
+};

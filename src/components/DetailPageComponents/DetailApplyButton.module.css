@@ -1,0 +1,32 @@
+.applyButton {
+  width: 100%;
+  background: #09f;
+  color: white;
+  border: none;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  margin-bottom: 3rem;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.applyButton:hover {
+  background: #0088e6;
+}
+
+.applyButton:disabled {
+  background: #666;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.applyButton:disabled:hover {
+  background: #666;
+}
+
+@media (min-width: 640px) {
+  .applyButton {
+    width: auto;
+  }
+}

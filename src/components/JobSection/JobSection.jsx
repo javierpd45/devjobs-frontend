@@ -1,5 +1,5 @@
 import snarkdown from "snarkdown";
-import styles from "../../pages/Detail.module.css";
+import styles from "./JobSection.module.css";
 
 export function JobSection({ title, content }) {
   const html = snarkdown(content);

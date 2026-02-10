@@ -1,0 +1,15 @@
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.meta {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+}
