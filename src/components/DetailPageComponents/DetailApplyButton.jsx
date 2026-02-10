@@ -1,8 +1,9 @@
 import styles from "./DetailApplyButton.module.css";
-import { useAuth } from "../../context/AuthContext.jsx";
+// import { useAuth } from "../../context/AuthContext.jsx";
+import { useAuthStore } from "../../store/authStore.js";
 
 export function DetailApplyButton() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuthStore();
 
   return (
     <>

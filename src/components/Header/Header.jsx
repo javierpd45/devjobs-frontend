@@ -1,5 +1,6 @@
 import { Link, NavLink } from "../Link/Link";
-import { useAuth } from "../../context/AuthContext.jsx";
+// import { useAuth } from "../../context/AuthContext.jsx";
+import { useAuthStore } from "../../store/authStore.js";
 
 export function Header() {
   return (
@@ -53,7 +54,7 @@ export function Header() {
 }
 
 const HeaderUserButton = () => {
-  const { isLoggedIn, login, logout } = useAuth();
+  const { isLoggedIn, login, logout } = useAuthStore();
   return isLoggedIn ? (
     <button onClick={logout}>Cerrar sesión</button>
   ) : (

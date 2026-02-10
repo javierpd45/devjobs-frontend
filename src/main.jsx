@@ -9,11 +9,7 @@ import { FavoritesProvider } from "./context/FavContext.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <FavoritesProvider>
-          <App />
-        </FavoritesProvider>
-      </AuthProvider>
+      <App />
     </BrowserRouter>
   </StrictMode>,
 );
