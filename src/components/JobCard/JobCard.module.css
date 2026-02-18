@@ -15,6 +15,14 @@
   margin-left: auto;
 }
 
+@media (max-width: 640px) {
+  .actions {
+    flex-direction: row;
+    margin-left: 0;
+    align-items: center;
+  }
+}
+
 .details {
   color: #09f;
   background: none;

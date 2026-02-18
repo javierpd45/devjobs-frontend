@@ -16,6 +16,7 @@
 }
 
 .title {
+  display: block;
   font-size: 2rem;
   font-weight: bold;
   color: var(--text-primary);
