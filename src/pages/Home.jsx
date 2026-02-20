@@ -1,4 +1,5 @@
 import { useRouter } from "../hooks/useRouter";
+import backgroundImg from "../assets/background.webp";
 
 export function HomePage() {
   const { navigateTo } = useRouter();
@@ -14,11 +15,16 @@ export function HomePage() {
 
     navigateTo(url);
   };
+
+  // useEffect(() => {
+  //   document.title = "DevJobs - Encuentra el trabajo de tus sueños";
+  // }, []);
+
   return (
     <main>
       <title>DevJobs - Encuentra el trabajo de tus sueños</title>
       <section>
-        <img src="./background.webp" width="200" />
+        <img src={backgroundImg} width="200" />
 
         <h1>Encuentra el trabajo de tus sueños</h1>
 
